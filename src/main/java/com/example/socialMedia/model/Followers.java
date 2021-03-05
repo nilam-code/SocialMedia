@@ -8,50 +8,47 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @EqualsAndHashCode
-@Table(name="UserProfile")
-public class UserProfile extends AuditModel{
-	
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "Follower")
+public class Followers extends AuditModel {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@NotNull
-	@Size(max = 200)
-	private String name;
-	
-	
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
 	@JsonBackReference
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "follower_id", nullable = false)
 	private User user;
+	
+	@JsonBackReference
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "followee_id", nullable = false)
+	private User userFollowee;
 
+	
 	public Long getId() {
-		return id;
+		return Id;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
-	}
-
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+		Id = id;
 	}
 
 	public User getUser() {
@@ -61,8 +58,16 @@ public class UserProfile extends AuditModel{
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
-	
 
+	public User getUserFollowee() {
+		return userFollowee;
+	}
+
+	public void setUserFollowee(User userFollowee) {
+		this.userFollowee = userFollowee;
+	}
+	
+	
+	
+	
 }

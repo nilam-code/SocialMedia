@@ -1,19 +1,28 @@
 package com.example.socialMedia.model;
 
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 //import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-
-import javax.persistence.*;
-import javax.sound.sampled.spi.AudioFileReader;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.List;
 
 @Entity
 @Data
@@ -21,23 +30,20 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "User")
 public class User extends AuditModel {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-   // @ApiModelProperty(notes = "Automatically generated id of the user")
     private Long Id;
 
     @NonNull
     @Size(max=30)
-    //@ApiModelProperty(notes = "Email of the user for logging in")
     private String email;
 
-    @NotNull
-    @Size(max=200)
-    //@ApiModelProperty(notes = "Fcmid of the user mobile device")
-    private String fcmId;
-
     @ElementCollection(fetch = FetchType.EAGER)
-    //@ApiModelProperty(notes = "Roles that user is going to have")
     List<Role> roles;
 
     @OneToOne(fetch = FetchType.LAZY,
@@ -45,10 +51,41 @@ public class User extends AuditModel {
             mappedBy = "user")
     @JsonManagedReference
     @JsonIgnore
-    //@ApiModelProperty(notes = "Variable linking the user with his user profile")
     private UserProfile userProfile;
 
+	public Long getId() { 	
+		return Id;
+	}
 
+	public void setId(Long id) {
+		Id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public UserProfile getUserProfile() {
+		return userProfile;
+	}
+
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+	}
+
+    
 
 
 }
