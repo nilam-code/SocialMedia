@@ -1,6 +1,8 @@
 package com.example.socialMedia.model;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Role implements GrantedAuthority{
 	
 	 ROLE_ADMIN, ROLE_CLIENT;
 

@@ -41,12 +41,16 @@ public class UserServiceImpl implements UserService{
 	public String fetchUserToken(String email) {
 		 User user;
        user=userRepository.findByEmail(email);
-       return user.getEmail();
-		/*
-		 * boolean flag; flag=alreadyRegistered(email); if(flag) { user=getUser(email);
-		 * return jwtTokenProvider.createToken(user.getEmail(), user.getRoles()); }
-		 * else{ throw new ResourceNotFoundException("User is not registered"); }
-		 */
+      // return user.getEmail();
+		
+		boolean flag;
+		flag = alreadyRegistered(email);
+		if (flag) {
+			user = getUser(email);
+			return jwtTokenProvider.createToken(user.getEmail(), user.getRoles());
+		} else {
+			throw new ResourceNotFoundException("User is not registered");
+		}
 
 	}
 	

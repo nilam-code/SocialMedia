@@ -22,6 +22,11 @@ import lombok.EqualsAndHashCode;
 @Table(name="UserProfile")
 public class UserProfile extends AuditModel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
